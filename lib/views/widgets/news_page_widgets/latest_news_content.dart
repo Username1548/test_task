@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:test_flutter/extensions/date_time_extension.dart';
 import 'package:test_flutter/repositories/news/models/article.dart';
 import 'package:test_flutter/resources/colors.dart';
-import 'package:test_flutter/resources/screen_size.dart';
 import 'package:test_flutter/resources/text_styles.dart';
 import 'package:test_flutter/views/widgets/common/image_widget.dart';
 
@@ -20,7 +19,7 @@ class LatestNewsContent extends StatelessWidget {
           child: ImageWidget(
             'latest$index',
             height: height * 0.6,
-            width: (ScreenSize.width ?? 0) * 0.22,
+            width: MediaQuery.sizeOf(context).width * 0.22,
             imageUrl: article.imageUrl,
           ),
         ),
@@ -28,7 +27,7 @@ class LatestNewsContent extends StatelessWidget {
           padding: const EdgeInsets.only(left: 23),
           child: SizedBox(
             height: height * 0.6,
-            width: (ScreenSize.width ?? 0) * 0.46,
+            width: MediaQuery.sizeOf(context).width * 0.46,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.spaceBetween,

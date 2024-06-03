@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:test_flutter/resources/colors.dart';
-import 'package:test_flutter/resources/screen_size.dart';
 import 'package:test_flutter/resources/text_styles.dart';
 import 'package:test_flutter/views/widgets/common/image_widget.dart';
 import '../../../repositories/news/repository.dart';
@@ -13,23 +12,21 @@ class DetailsWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    
-
     return SingleChildScrollView(
       child: Column(
         children: [
           SizedBox(
-            height: (ScreenSize.height ?? 0) * 0.55,
+            height: (MediaQuery.sizeOf(context).height) * 0.55,
             width: MediaQuery.sizeOf(context).width,
             child: Stack(children: [
               ImageWidget(
                 tag,
-                height: (ScreenSize.height ?? 0) * 0.55,
+                height: (MediaQuery.sizeOf(context).height) * 0.55,
                 width: MediaQuery.sizeOf(context).width,
                 imageUrl: article.imageUrl,
               ),
               Padding(
-                padding: const EdgeInsets.only(top: 87, left: 16),
+                padding: const EdgeInsets.only(top: 40, left: 16),
                 child: Align(
                   alignment: Alignment.topLeft,
                   child: GestureDetector(

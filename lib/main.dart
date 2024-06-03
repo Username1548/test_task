@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:test_flutter/resources/colors.dart';
 import 'package:test_flutter/views/pages/news_page.dart';
 
+
 void main() {
   runApp(const ProviderScope(child: ForestVPNTestApp()));
 }
@@ -42,3 +43,9 @@ class ForestVPNTestApp extends StatelessWidget {
     );
   }
 }
+
+
+
+
+
+

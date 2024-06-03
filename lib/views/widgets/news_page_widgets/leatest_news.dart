@@ -22,41 +22,40 @@ class _FeaturedNewsState extends ConsumerState<LatestNews> {
 
   @override
   Widget build(BuildContext context) {
-    final news = ref.watch(latestNewsStateProvider);
-    return news.when(
-      data: (data) => data.isEmpty  ? const Text('empty'): ListView.builder(
-        padding: EdgeInsets.zero,
-        physics: const NeverScrollableScrollPhysics(),
-        itemBuilder: (context, index) => Padding(
-          padding: const EdgeInsets.only(bottom: 20),
-          child: GestureDetector(
-            onTap: () {
-              ref
-                  .read(newsDetailStateProvider.notifier)
-                  .getArticle(data[index].id);
-              ref
-                  .read(latestNewsStateProvider.notifier)
-                  .markOneRead(data[index].id);
-              Navigator.push(
-              context, MaterialPageRoute(builder:(context) =>  NewsDetailsPage('latest$index'),)
-            );
-            },
-            child: Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(9),
-                color: data[index].readed
-                    ? CustomColors.greyBackground
-                    : CustomColors.white,
-              ),
-              height: widget.height,
-              child: LatestNewsContent(data[index], widget.height, index),
+    final data = ref.watch(latestNewsStateProvider);
+    return ListView.builder(
+      padding: const EdgeInsets.all(0),
+      shrinkWrap: true,
+      physics: const NeverScrollableScrollPhysics(),
+      itemCount: data.length,
+      itemBuilder: (context, index) => Padding(
+        padding: const EdgeInsets.only(bottom: 20),
+        child: GestureDetector(
+          onTap: () {
+            ref
+                .read(newsDetailStateProvider.notifier)
+                .getArticle(data[index].id);
+            ref
+                .read(latestNewsStateProvider.notifier)
+                .markOneRead(data[index].id);
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => NewsDetailsPage('latest$index'),
+                ));
+          },
+          child: Container(
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(9),
+              color: data[index].readed
+                  ? CustomColors.greyBackground
+                  : CustomColors.white,
             ),
+            height: widget.height,
+            child: LatestNewsContent(data[index], widget.height, index),
           ),
         ),
-        itemCount: data.length,
       ),
-      error: (error, stackTrace) => Text(error.toString()),
-      loading: () => const CircularProgressIndicator(),
     );
   }
 }

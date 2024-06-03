@@ -2,33 +2,27 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:test_flutter/repositories/news/repository.dart';
 
 final latestNewsStateProvider =
-    StateNotifierProvider<LatestNewsStateProvider, AsyncValue<List<Article>>>(
+    StateNotifierProvider<LatestNewsStateProvider, List<Article>>(
   (ref) {
     final repository = ref.read(newsRepositoryProvider);
     return LatestNewsStateProvider(repository);
   },
 );
 
-class LatestNewsStateProvider extends StateNotifier<AsyncValue<List<Article>>> {
-  LatestNewsStateProvider(this.repository) : super(const AsyncLoading());
+class LatestNewsStateProvider extends StateNotifier<List<Article>> {
+  LatestNewsStateProvider(this.repository) : super([]);
   final AbstractNewsRepository repository;
   getLatestNews() async {
     final latestArticles = await repository.getLatestArticles();
-    state = AsyncData(latestArticles);
+    state = latestArticles;
   }
 
   markAllRead() {
-    if (state.value != null) {
-      state =
-          AsyncData(state.value!.map((e) => e.copyWith(readed: true)).toList());
-    }
+    state = state.map((e) => e.copyWith(readed: true)).toList();
   }
 
   markOneRead(String id) {
-    if (state.value != null) {
-      state = AsyncData(state.value!
-          .map((e) => (id == e.id) ? e.copyWith(readed: true) : e)
-          .toList());
-    }
+    state =
+        state.map((e) => (id == e.id) ? e.copyWith(readed: true) : e).toList();
   }
 }
